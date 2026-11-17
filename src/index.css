@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+:root {
+  --bg-obsidian: #09090b;
+  --bg-surface: rgba(15, 15, 19, 0.9);
+  --ink-ivory: #f2ede4;
+  --ink-ash: #9a948a;
+  --accent-champagne: #d4a86a;
+  --accent-ruby: #a61c28;
+  --hairline: rgba(242, 237, 228, 0.14);
+  --hairline-gold: rgba(212, 168, 106, 0.36);
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+@layer base {
+  html {
+    background-color: var(--bg-obsidian);
+    color: var(--ink-ivory);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-color: var(--bg-obsidian);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  @media (pointer: fine) {
+    body.has-custom-cursor,
+    body.has-custom-cursor a,
+    body.has-custom-cursor button {
+      cursor: none;
+    }
+  }
+}
+
+.font-display {
+  font-family: var(--font-serif);
+}
+
+.font-tech {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Preloader curtain */
+.preloader-curtain {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1.05s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease;
+}
+
+.preloader-curtain.is-done {
+  clip-path: inset(0 0 100% 0);
+  pointer-events: none;
+}
+
+/* Custom precision reticle cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  transition: opacity 0.2s ease;
+}
+
+.cursor-ring {
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  border: 1px solid rgba(242, 237, 228, 0.7);
+  transition:
+    width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.22s ease,
+    background-color 0.22s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cursor-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--accent-champagne);
+  position: absolute;
+}
+
+.cursor-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--ink-ivory);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.custom-cursor.cursor--drag .cursor-ring {
+  width: 64px;
+  height: 64px;
+  border-color: var(--accent-champagne);
+  background-color: rgba(212, 168, 106, 0.09);
+}
+
+.custom-cursor.cursor--drag .cursor-label {
+  opacity: 1;
+}
+
+.custom-cursor.cursor--action .cursor-ring {
+  width: 44px;
+  height: 44px;
+  border-color: var(--ink-ivory);
+  background-color: rgba(242, 237, 228, 0.12);
+}
+
+/* Magnetic button sheen */
+.mag-btn {
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mag-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(212, 168, 106, 0.24), transparent);
+  transform: translateX(-115%);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.mag-btn:hover::before {
+  transform: translateX(115%);
+}
+
+/* Nav link animated underline */
+.nav-link-line {
+  position: relative;
+}
+
+.nav-link-line::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: var(--accent-champagne);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link-line:hover::after,
+.nav-link-line.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Radial stage vignette */
+.canvas-vignette {
+  background: radial-gradient(
+    circle at 58% 50%,
+    transparent 24%,
+    rgba(9, 9, 11, 0.35) 72%,
+    rgba(9, 9, 11, 0.84) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader-curtain,
+  .mag-btn::before,
+  .nav-link-line::after,
+  .cursor-ring {
+    transition-duration: 0.01ms;
+  }
+}

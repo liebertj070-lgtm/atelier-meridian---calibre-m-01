@@ -1,0 +1,6 @@
+{
+  "name": "Atelier Meridian — Calibre M-01",
+  "description": "Interactive 3D haute horlogerie flagship featuring a procedural flying tourbillon, scroll-driven axial disassembly, and live escapement kinematics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
